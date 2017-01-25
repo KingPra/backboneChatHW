@@ -12,29 +12,34 @@ module.exports = Backbone.View.extend({
     },
 
     updateMsg: function () {
-        // might be where I put incoming messages
         const newMsg = this.el.querySelector('#message').value;
         const username = this.el.querySelector('#username').value;
         console.log('updateMsg function from views just kicked in');
-        console.log(newMsg + ' ' + username);
+        //this.model.setMessage(newMsg, username);
+        this.model.createNew(username, newMsg);
     },
 
     render: function () {
 
         // //this line calls the mustache template from html script
         const template = document.querySelector('#message-template').innerHTML;
+
         this.el.querySelector('#incoming-msg').innerHTML = '';
-        this.el.querySelector('#message').innerHTML = '';
-        const li = document.createElement('li');
-        li.innerHTML = Mustache.render(
+        // looping through chat list
+        for (let i = 0; i <this.model.models.length; i++) {
+            const m = this.model.models[i];
+
+        const child = document.createElement('li');
+        child.innerHTML = Mustache.render(
             template,
             {
-                username: 'name',
-                message: 'the message',
+                username: 'from: ' + m.get('name'),
+                message: m.get('message'),
             }
         );
-        const parent = this.el.querySelector('#incoming-msg');
-        parent.appendChild(li);
-        console.log('render func on ' + parent);
+        const parent = document.querySelector('#incoming-msg');
+        parent.appendChild(child);
+        console.log('name ' + m.get('name'));
+        }
     },
 });

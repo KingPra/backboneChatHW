@@ -1,8 +1,8 @@
-const ChatModel = require('./models/chat');
+const Chatlist = require('./models/chatlist');
 const ChatView = require('./views/chat');
 
 window.addEventListener('load', function () {
-    const event = new ChatModel();
+    const event = new Chatlist();
 
     const view = new ChatView({
     el: document.querySelector('body'),
